@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import pickle
 from datetime import datetime
+from flask_cors import CORS
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 model = pickle.load(open('model.pkl', 'rb'))
 
