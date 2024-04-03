@@ -21,3 +21,6 @@ def predict():
         array_of_predict.append(obj)
     
     return jsonify(array_of_predict)
+
+if __name__ == "__main__":
+    app.run()
