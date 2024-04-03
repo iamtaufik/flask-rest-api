@@ -1,4 +1,4 @@
-Flask==2.3.2
+Flask==3.0.2
 python==3.11.4
 holidays==0.24
 prophet==1.1.5
