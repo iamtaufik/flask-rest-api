@@ -36,9 +36,9 @@ def predict():
     for i in range(len(forecast['ds'])):
         obj = {
             'date': forecast['ds'][i].strftime("%B %Y"),
-            'sales_upper': forecast['yhat_upper'][i],
-            'sales': forecast['yhat'][i],
-            'sales_lower': forecast['yhat_lower'][i],
+            'sales_upper': round(forecast['yhat_upper'][i]),
+            'sales': round(forecast['yhat'][i]),
+            'sales_lower': round(forecast['yhat_lower'][i]),
         }
         array_of_predict.append(obj)
     
