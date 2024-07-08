@@ -29,19 +29,28 @@ def predict():
     date_to_predict = request_data['date_to_predict']
 
     month = count_month("10/31/2019", date_to_predict)
+
     future = model.make_future_dataframe(periods=month + 1, freq='M')
     forecast = model.predict(future)
 
+    # Konversi hasil harian ke bulanan
+    forecast['month'] = forecast['ds'].dt.to_period('M')
+    monthly_forecast = forecast.groupby('month').agg({
+        'yhat': 'mean',
+        'yhat_upper': 'mean',
+        'yhat_lower': 'mean'
+    }).reset_index()
+
     array_of_predict = []
-    for i in range(len(forecast['ds'])):
+    for i in range(len(monthly_forecast)):
         obj = {
-            'date': forecast['ds'][i].strftime("%B %Y"),
-            'sales_upper': round(forecast['yhat_upper'][i]),
-            'sales': round(forecast['yhat'][i]),
-            'sales_lower': round(forecast['yhat_lower'][i]),
+            'date': monthly_forecast['month'][i].strftime("%B %Y"),
+            'sales_upper': round(monthly_forecast['yhat_upper'][i]),
+            'sales': round(monthly_forecast['yhat'][i]),
+            'sales_lower': round(monthly_forecast['yhat_lower'][i]),
         }
         array_of_predict.append(obj)
-    
+
     return jsonify(array_of_predict)
 
 if __name__ == "__main__":
