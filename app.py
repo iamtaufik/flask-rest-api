@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-model = pickle.load(open('model.pkl', 'rb'))
+model = pickle.load(open('trained_model.pkl', 'rb'))
 
 def count_month(start_date, end_date):
     # start_date = datetime.strptime(start_date, "%Y-%m-%d")
